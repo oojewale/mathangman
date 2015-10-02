@@ -20,12 +20,22 @@ describe Utility do
       end
   end
 
-  describe "#info" do
+
+  describe "#check_source" do
       it "returns falsy " do
-        allow(@game).to receive(:gets).and_return("y")
-        allow(@game).to receive(:gets).and_return("yes")
-        expect(@game.info).to be_falsy
+        expect{ @game.check_source  "addy" }.to raise_error SystemExit
+        expect{ @game.check_source }.to raise_error ArgumentError
       end
   end
+
+  # describe "#quitter" do
+  #     it "returns falsy " do
+  #       allow(@game).to receive(:gets).and_return("y")
+  #       allow(@game).to receive(:gets).and_return("y")
+  #       allow(@game).to receive(:save_game).and_return(nil)
+  #       expect(lambda { @game.quitter "obj" }).to raise_error SystemExit
+  #       expect(lambda { @game.quitter }).to raise_error ArgumentError
+  #     end
+  # end
 
 end

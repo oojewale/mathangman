@@ -10,5 +10,6 @@ require "mathangman"
 # require "pry"
 # Pry.start
 
-require "irb"
-IRB.start
+# require "irb"
+# IRB.start
+Mathangman::Hangman.new

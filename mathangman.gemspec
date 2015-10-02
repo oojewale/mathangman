@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = "The is an implementation of the hangman game."
   spec.description   = "This is an implementation of the hangman game with 3 difficulty levels"
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.homepage      = "https://github.com/andela-oojewale/mathangman"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org by setting 'allowed_push_host', or
