@@ -12,9 +12,7 @@ describe Game do
     it "returns a new game object " do
       expect(@game).to be_a Game
     end
-  end
 
-  describe "#new" do
     it "throws error when instantiated with 2 or more parameters" do
       expect{ Game.new "football", "hangman" }.to raise_error ArgumentError
     end
@@ -24,9 +22,7 @@ describe Game do
     it "returns true " do
       expect(@game.diff_level(4)).to be true
     end
-  end
 
-  describe "#diff_level" do
     it "returns true " do
       expect(@game.diff_level("r")).to be true
     end
@@ -92,20 +88,20 @@ describe Game do
     end
   end
 
-  # describe "#check_validity" do
-  #   it "returns true " do
-  #     allow(@game).to receive(Game.is_alpha? "olaide").and_return(true)
-  #     expect(@game.check_validity).to be true
-  #     expect(lambda { @game.check_validity "arg" }).to raise_error ArgumentError
-  #   end
-  # end
+  describe "#check_validity" do
+    it "returns true " do
+      allow(@game).to receive(:is_alpha?).and_return(true)
+      expect(@game.check_validity).to be true
+      expect{ @game.check_validity "arg" }.to raise_error ArgumentError
+    end
+  end
 
-  # describe "#check_validity" do
-  #   it "returns false " do
-  #     allow(@game).to receive(is_alpha? 1234).and_return(false)
-  #     expect(@game.check_validity).to be false
-  #   end
-  # end
+  describe "#check_validity" do
+    it "returns false " do
+      allow(@game).to receive(:is_alpha?).and_return(false)
+      expect(@game.check_validity).to be_falsy
+    end
+  end
 
   describe "#check_difficulty" do
     it "returns falsy " do
@@ -183,5 +179,34 @@ describe Game do
     end
   end
 
+  describe "#player_choice" do
+
+    it "gets player choice" do
+      allow(@game).to receive(:quitter).and_return(true)
+      expect(@game.player_choice('*')).to be true
+    end
+
+    it "calls call_name when 1 is passsed" do
+      allow(@game).to receive(:call_name).and_return(true)
+      expect(@game.player_choice('1')).to be true
+    end
+
+    it "calls load_game when 2 is passsed" do
+      allow(@game).to receive(:load_game).and_return(true)
+      expect(@game.player_choice('2')).to be true
+    end
+
+    it "calls call_info when 3 is passsed" do
+      allow(@game).to receive(:call_info).and_return(true)
+      expect(@game.player_choice('3')).to be true
+    end
+  end
+
+
+  # describe "#archives" do
+  #   it "returns a hash" do
+  #     expect(@game.archives).to be_a Hash
+  #   end
+  # end
 
 end

@@ -45,6 +45,7 @@ class Display
 
   def complete_disp
     <<-EOS
+
               ******************************************
               *             YOU WIN!                   *
               *        YOU HANGED HANGMAN!             *
