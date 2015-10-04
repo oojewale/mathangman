@@ -107,8 +107,7 @@ describe Game do
     it "returns falsy " do
       allow(@game).to receive(:quitter).and_return(nil)
       allow(@game).to receive(:first_guess).and_return(nil)
-      allow(@game).to receive(:gets).and_return(1)
-      allow(@game).to receive(:gets).and_return("5")
+      allow(@game).to receive(:gets).and_return("7")
       expect(@game.check_difficulty).to be_falsy
     end
   end
@@ -203,10 +202,139 @@ describe Game do
   end
 
 
-  # describe "#archives" do
-  #   it "returns a hash" do
-  #     expect(@game.archives).to be_a Hash
-  #   end
-  # end
+  describe "#archives" do
+    it "returns file path as string" do
+      expect(@game.archives("base")).to be_a String
+    end
+  end
+
+
+  describe "#completed" do
+    it "returns nil when word is not containing '-'" do
+      allow(@game).to receive(:puts).and_return(nil)
+      allow(@game).to receive(:del_dir).and_return(nil)
+      allow(@game).to receive(:show_disp_menu).and_return(nil)
+      @game.word = "word"
+      expect(@game.completed).to be nil
+    end
+  end
+
+  describe "#first_guess" do
+    it "displays appropriately and returns nil" do
+      allow(@game).to receive(:rand_word).and_return("holiday")
+      allow(@game).to receive(:puts).and_return(nil)
+      allow(@game).to receive(:guesses).and_return(nil)
+      @game.len = 7
+      expect(@game.first_guess).to be nil
+    end
+  end
+
+  describe "#wrong_guess" do
+    it "evaluates number of wrong guesses and returns nil" do
+      allow(@game).to receive(:puts).and_return(nil)
+      allow(@game).to receive(:show_disp_menu).and_return(nil)
+      @game.wrongs_num
+      @game.secret_word
+      expect(@game.wrong_guess).to be nil
+    end
+  end
+
+  describe "#check_repeated" do
+    it "gets location of the file to be saved" do
+     allow(@game).to receive(:create_dir).and_return(nil)
+      @game.restart
+      expect(@game.check_repeated("olaide")).to be_a String
+    end
+  end
+
+  describe "#get_folder_items" do
+    it "returns a Hash" do
+      @game.folder
+      expect(@game.get_folder_items).to be_a Hash
+    end
+  end
+
+  describe "#load_game" do
+    it "returns nil" do
+      allow(@game).to receive(:puts).and_return(nil)
+      allow(@game).to receive(:gets).and_return("base")
+      allow(@game).to receive(:folder_not_exist?).and_return(true)
+      allow(@game).to receive(:load_file).and_return(nil)
+      allow(@game).to receive(:show_disp_menu).and_return(nil)
+      allow(@disp).to receive(:msg).and_return(nil)
+      @game.folder
+      expect(@game.load_game).to be nil
+    end
+  end
+
+  describe "#save_game" do
+    it "returns nil" do
+      allow(@game).to receive(:check_repeated).and_return(String)
+      allow(@game).to receive(:save_state).and_return(nil)
+      expect(@game.save_game).to be nil
+    end
+  end
+
+  describe "#act_on_guess" do
+    it "returns nil" do
+      allow(@game).to receive(:is_correct?).and_return(true)
+      allow(@game).to receive(:show_letter).and_return(nil)
+      allow(@game).to receive(:completed).and_return(nil)
+      @game.word
+      expect(@game.act_on_guess).to be nil
+    end
+
+    it "returns nil" do
+      allow(@game).to receive(:is_correct?).and_return(false)
+      allow(@game).to receive(:wrong_guess).and_return(Integer)
+      @game.disp_word
+      expect(@game.act_on_guess).to be nil
+    end
+
+  end
+
+  describe "#process" do
+    it "returns nil" do
+      allow(@game).to receive(:is_alpha?).and_return(true)
+      allow(@game).to receive(:act_on_guess).and_return(nil)
+      allow(@game).to receive(:puts).and_return(nil)
+      allow(@game).to receive(:guesses).and_return(nil)
+      @game.wrongs_num
+      expect(@game.process).to be nil
+    end
+
+    it "returns nil" do
+      allow(@game).to receive(:is_alpha?).and_return(false)
+      allow(@game).to receive(:puts).and_return(nil)
+      allow(@game).to receive(:guesses).and_return(nil)
+      @game.wrongs_num
+      expect(@game.process).to be nil
+    end
+
+  end
+
+  describe "#guesses" do
+    it "returns nil" do
+      allow(@game).to receive(:input_from_user).and_return(nil)
+      allow(@game).to receive(:puts).and_return(nil)
+      allow(@game).to receive(:process).and_return(nil)
+      expect(@game.guesses).to be nil
+    end
+  end
+
+  describe "#show_disp_menu" do
+    it "returns nil when all functions within it return nil" do
+      allow(@game).to receive(:puts).and_return(nil)
+      allow(@game).to receive(:gets).and_return("1")
+      allow(@game).to receive(:player_choice).and_return(nil)
+      allow(@game).to receive(:check_difficulty).and_return(nil)
+      expect(@game.show_disp_menu).to be nil
+    end
+  end
+
+# 93.0
+
+
+
 
 end

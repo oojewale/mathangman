@@ -78,6 +78,11 @@ class Display
               *      This is HANGMAN game v0.1.0               *
               *            By Olaide Ojewale                   *
               *      Enjoy and expect the next version         *
+              *      Press * at anytime to quit the game.      *
+              *      You will be prompted to save a started... *
+              *      ...game whenever you attempt to quit.     *
+              *      You can also load and continue saved...   *
+              *      ... games by uisng your username.         *
               *      Press Y to continue with the game.        *
               **************************************************
     EOS

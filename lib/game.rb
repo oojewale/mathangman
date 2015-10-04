@@ -7,7 +7,7 @@ class Game
   include Utility
 
   attr_reader :display
-  attr_accessor :secret_word, :name, :folder, :restart, :files
+  attr_accessor :secret_word, :name, :folder, :restart, :files, :word, :len, :wrongs_num, :disp_word, :guess
 
   def initialize(disp = nil)
     @guess_bonus = 2
@@ -251,20 +251,17 @@ class Game
 
   def check_difficulty
     diff = gets.chomp
-    if diff != "*"
-    first_guess(diff)
+    levels = ["7", "8", "9"]
+    if levels.include? diff
+      first_guess(diff)
     elsif diff == "*"
-      quitter(nil)
+      quitter("pre_game")
     else
       puts @display.invalid_entry
       puts @display.difficulty
+      check_difficulty
     end
   end
-
-  # def get_game_info
-  #   # puts @display.info
-
-  # end
 
   def show_disp_menu
     puts @display.greeting
