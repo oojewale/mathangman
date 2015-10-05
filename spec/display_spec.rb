@@ -1,14 +1,14 @@
 require "spec_helper"
 
-describe Display do
+describe Mathangman::Display do
 
   before :each  do
-    @disp = Display.new
+    @disp = Mathangman::Display.new
   end
 
   describe "#new" do
     it "returns a new game object " do
-      expect(@disp).to be_a Display
+      expect(@disp).to be_a Mathangman::Display
     end
   end
 

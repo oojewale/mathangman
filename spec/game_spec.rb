@@ -1,20 +1,20 @@
 require "spec_helper"
 
 
-describe Game do
+describe Mathangman::Game do
 
   before :each  do
-    @disp = Display.new
-     @game = Game.new(@disp)
+    @disp = Mathangman::Display.new
+     @game = Mathangman::Game.new(@disp)
   end
 
   describe "#new" do
     it "returns a new game object " do
-      expect(@game).to be_a Game
+      expect(@game).to be_a Mathangman::Game
     end
 
     it "throws error when instantiated with 2 or more parameters" do
-      expect{ Game.new "football", "hangman" }.to raise_error ArgumentError
+      expect{ Mathangman::Game.new "football", "hangman" }.to raise_error ArgumentError
     end
   end
 
@@ -90,7 +90,8 @@ describe Game do
 
   describe "#check_validity" do
     it "returns true " do
-      allow(@game).to receive(:is_alpha?).and_return(true)
+      # require "pry";   binding.pry
+      allow(Mathangman::Utility).to receive(:is_alpha?).and_return(true)
       expect(@game.check_validity).to be true
       expect{ @game.check_validity "arg" }.to raise_error ArgumentError
     end
@@ -98,7 +99,7 @@ describe Game do
 
   describe "#check_validity" do
     it "returns false " do
-      allow(@game).to receive(:is_alpha?).and_return(false)
+      allow(Mathangman::Utility).to receive(:is_alpha?).and_return(false)
       expect(@game.check_validity).to be_falsy
     end
   end
@@ -182,7 +183,7 @@ describe Game do
 
     it "gets player choice" do
       allow(@game).to receive(:quitter).and_return(true)
-      expect(@game.player_choice('*')).to be true
+      expect{@game.player_choice '*'}.to raise_error SystemExit
     end
 
     it "calls call_name when 1 is passsed" do
@@ -295,7 +296,7 @@ describe Game do
 
   describe "#process" do
     it "returns nil" do
-      allow(@game).to receive(:is_alpha?).and_return(true)
+      allow(Mathangman::Utility).to receive(:is_alpha?).and_return(true)
       allow(@game).to receive(:act_on_guess).and_return(nil)
       allow(@game).to receive(:puts).and_return(nil)
       allow(@game).to receive(:guesses).and_return(nil)
@@ -304,7 +305,7 @@ describe Game do
     end
 
     it "returns nil" do
-      allow(@game).to receive(:is_alpha?).and_return(false)
+      allow(Mathangman::Utility).to receive(:is_alpha?).and_return(false)
       allow(@game).to receive(:puts).and_return(nil)
       allow(@game).to receive(:guesses).and_return(nil)
       @game.wrongs_num
@@ -331,10 +332,5 @@ describe Game do
       expect(@game.show_disp_menu).to be nil
     end
   end
-
-# 93.0
-
-
-
 
 end
