@@ -173,17 +173,16 @@ module Mathangman
         end
       end
       files_hash.each { | key, value | puts "#{key})  #{value}" }
-      files_hash
     end
 
     def load_file
       @restart = @files[gets.chomp.to_i]
       unless @restart.nil?
-          game_file = File.readlines archives "saved_games"
-          game_data = []
-          game_file.each { | item | game_data << item }
-          restore_state(game_data)
-          guesses
+        game_file = File.readlines archives "saved_games"
+        game_data = []
+        game_file.each { | item | game_data << item }
+        restore_state(game_data)
+        guesses
       else
         puts @display.msg "Incorrect entry. Please check and retype."
         load_file
