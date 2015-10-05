@@ -5,56 +5,87 @@ class Display
   include Utility
 
   def greeting
-    puts "              *************************************************"
-    puts "              *                 HANGMAN                       *"
-    puts "              *                                               *"
-    puts "              *       Press 1 to start a new game             *"
-    puts "              *       Press 2 to load a saved game            *"
-    puts "              *       Press 3 for more information            *"
-    puts "              *       Press * to quit the game at anytime     *"
-    puts "              *                                               *"
-    puts "              *************************************************"
+    <<-EOS
+              *************************************************
+              *                 HANGMAN                       *
+              *                                               *
+              *       Press 1 to start a new game             *
+              *       Press 2 to load a saved game            *
+              *       Press 3 for more information            *
+              *       Press * to quit the game at anytime     *
+              *                                               *
+              *************************************************
+    EOS
   end
 
   def difficulty
-    puts "            Choose a difficulty level."
-    puts "            7 - for beginner"
-    puts "            8 - for intermediate"
-    puts "            9 - for PRO"
+    <<-EOS
+              Choose a difficulty level.
+              7 - for beginner
+              8 - for intermediate
+              9 - for PRO
+    EOS
   end
 
   def invalid_entry
-    puts "              *************************************************"
-    puts "              *                 Invalid entry.                *"
-    puts "              *************************************************"
+    <<-EOS
+              *************************************************
+              *                 Invalid entry.                *
+              *************************************************
+    EOS
   end
 
   def get_name
-    puts "              *************************************************"
-    puts "              *       Please enter a username                 *"
-    puts "              *************************************************"
+    <<-EOS
+              *************************************************
+              *       Please enter a username                 *
+              *************************************************
+    EOS
   end
 
   def complete_disp
-    puts "\n                ******************************************"
-    puts "                  *             YOU WIN!                   *"
-    puts "                  *        YOU HANGED HANGMAN!             *"
-    puts "                            YOU ARE THE BOSS!              *"
-    puts "                  ******************************************"
+    <<-EOS
+
+              ******************************************
+              *             YOU WIN!                   *
+              *        YOU HANGED HANGMAN!             *
+                        YOU ARE THE BOSS!              *
+              ******************************************
+    EOS
   end
 
   def lost(word)
-      puts "              *************************************"
-      puts "              *       YOU HAVE BEEN HANGED!       *"
-      puts "              *            GAME OVER!             *"
-      puts "                     THE WORD IS: #{word}  "
-      puts "              *************************************"
+    <<-EOS
+              *************************************
+              *       YOU HAVE BEEN HANGED!       *
+              *            GAME OVER!             *
+                      THE WORD IS: #{word}
+              *************************************
+      EOS
   end
 
   def msg(anything)
-    puts ""
-    puts "        * #{anything} *"
-    puts ""
+    <<-EOS
+
+              * #{anything} *
+
+    EOS
+  end
+
+  def info
+    <<-EOS
+              **************************************************
+              *      This is HANGMAN game v0.1.0               *
+              *            By Olaide Ojewale                   *
+              *      Enjoy and expect the next version         *
+              *      Press * at anytime to quit the game.      *
+              *      You will be prompted to save a started... *
+              *      ...game whenever you attempt to quit.     *
+              *      You can also load and continue saved...   *
+              *      ... games by uisng your username.         *
+              *      Press Y to continue with the game.        *
+              **************************************************
+    EOS
   end
 
 end

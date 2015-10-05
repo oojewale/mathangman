@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = "The is an implementation of the hangman game."
   spec.description   = "This is an implementation of the hangman game with 3 difficulty levels"
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.homepage      = "https://github.com/andela-oojewale/mathangman"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org by setting 'allowed_push_host', or
@@ -23,8 +23,8 @@ Gem::Specification.new do |spec|
   end
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
-  spec.bindir        = "exe"
-  spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
+  spec.bindir        = "bin"
+  spec.executables   = ["mathangman"]
   spec.require_paths = ["lib"]
 
   spec.add_development_dependency "bundler", "~> 1.10.6"

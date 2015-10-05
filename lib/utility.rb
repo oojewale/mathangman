@@ -1,27 +1,38 @@
 module Utility
 # This module serves as an utility for the whole project.
 
-  def quitter(obj)
+  def quitter(obj = nil)
     puts "       ****************************************************************"
     puts "       *   Are you sure you want to quit the game? Press Y to confirm *"
     puts "       ****************************************************************"
-      reply = STDIN.gets.chomp.downcase
-      if reply == "y" || reply == "yes"
-        if !obj.nil?
-          puts "        ***********************************************************"
-          puts "        *    Would you like to save your game? Press Y to confirm *"
-          puts "        ***********************************************************"
-          save_it = STDIN.gets.chomp.downcase
-          if save_it == 'y' || save_it == "yes"
-            obj.save_game
-          end
-        end
-        puts "              *************************************************"
-        puts "              *       You have successfully ended the game.   *"
-        puts "              *************************************************"
-        exit
-      else
-        obj.guesses
+    quit_reply(obj)
+    puts "       *************************************************"
+    puts "       *       You have successfully ended the game.   *"
+    puts "       *************************************************"
+    exit
+  end
+
+  def quit_reply(obj = nil)
+    reply = gets.chomp.downcase
+    if reply == "y" || reply == "yes"
+      if obj != nil && obj != "pre_game"
+        puts "       ***********************************************************"
+        puts "       *    Would you like to save your game? Press Y to confirm *"
+        puts "       ***********************************************************"
+        save_on_quit
+      end
+    elsif reply != "y" && reply != "yes" && obj == "pre_game"
+      puts "       *       Choose a difficulty level to continue.   *"
+      self.check_difficulty
+    elsif reply != "y" && reply != "yes" && obj != "pre_game" && (is_alpha? reply)
+      self.guesses
+    end
+  end
+
+  def save_on_quit
+    save_it = gets.chomp.downcase
+      if save_it == 'y' || save_it == "yes"
+        self.save_game
       end
   end
 
@@ -37,18 +48,6 @@ module Utility
       puts "            ***************************************"
       exit
     end
-  end
-
-  def info
-    puts "              **************************************************"
-    puts "              *      This is HANGMAN game v0.1.0               *"
-    puts "              *            By Olaide Ojewale                   *"
-    puts "              *      Enjoy and expect the next version         *"
-    puts "              *      Press Y to continue with the game.        *"
-    puts "              **************************************************"
-    response = gets.chomp.downcase
-    return Game.new.show_disp_menu if response == "y" || response == "yes"
-    exit
   end
 
   def is_alpha?(char)

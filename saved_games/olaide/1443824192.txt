@@ -1,5 +1,5 @@
 7
------a-e--
+--o--a-e-t
 unornament
-3
+1
 10

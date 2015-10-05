@@ -7,7 +7,7 @@ class Game
   include Utility
 
   attr_reader :display
-  attr_accessor :secret_word
+  attr_accessor :secret_word, :name, :folder, :restart, :files, :word, :len, :wrongs_num, :disp_word, :guess
 
   def initialize(disp = nil)
     @guess_bonus = 2
@@ -52,7 +52,7 @@ class Game
   end
 
   def guesses
-    @display.msg "Enter an alphabet guess for the #{@len} letter word."
+    puts @display.msg "Enter an alphabet guess for the #{@len} letter word."
     input_from_user
     if @guess == "*"
       quitter(self)
@@ -64,9 +64,9 @@ class Game
     if is_alpha? @guess
       act_on_guess
     else
-      @display.msg "Invalid input. Only alphabets are allowed."
+      puts @display.msg "Invalid input. Only alphabets are allowed."
     end
-    @display.msg "You have #{@wrongs_num} wrong guess(es) left."
+    puts @display.msg "You have #{@wrongs_num} wrong guess(es) left."
     guesses
   end
 
@@ -82,7 +82,7 @@ class Game
 
   def completed
     if !@word.include? "-"
-      @display.complete_disp
+      puts @display.complete_disp
       File.delete "saved_games/#{@folder}/#{@restart}" if @restart
       del_dir
       show_disp_menu
@@ -109,7 +109,7 @@ class Game
     @wrongs_num -= 1
     if @wrongs_num == 0
       secret_word = @secret_word
-      @display.lost secret_word
+      puts @display.lost secret_word
       show_disp_menu
     end
   end
@@ -146,14 +146,14 @@ class Game
   end
 
   def load_game
-    @display.get_name
+    puts @display.get_name
     @folder = gets.chomp.downcase
     if !folder_not_exist?
       @files = get_folder_items
-      @display.msg "Your most recent game is at the BOTTOM\nEnter the number corresponding to the file you want to load"
+      puts @display.msg "Your most recent game is at the BOTTOM\nEnter the number corresponding to the file you want to load"
       load_file
     else
-      @display.msg "No archive with this username."
+      puts @display.msg "No archive with this username."
       show_disp_menu
     end
   end
@@ -177,16 +177,20 @@ class Game
 
   def load_file
     @restart = @files[gets.chomp.to_i]
-    if !@restart.nil?
-        game_file = File.readlines "saved_games/#{@folder}/#{@restart}"
+    unless @restart.nil?
+        game_file = File.readlines archives "saved_games"
         game_data = []
         game_file.each { | item | game_data << item }
         restore_state(game_data)
         guesses
     else
-      @display.msg "Incorrect entry. Please check and retype."
+      puts @display.msg "Incorrect entry. Please check and retype."
       load_file
     end
+  end
+
+  def archives(link)
+    "#{link}/#{@folder}/#{@restart}"
   end
 
   def save_state(loc)
@@ -210,47 +214,61 @@ class Game
   end
 
   def player_choice(choice)
-    case choice
-    when "1"
-      begin
-        @display.get_name
-        @name = gets.chomp.downcase
-      end until check_validity
-    when "2"
-      load_game
-    when "3"
-      @display.info
-    when "*"
-      quitter(nil)
+    if supported_actions.include? choice
+      send(supported_actions[choice])
     else
-      @display.invalid_entry
+      puts @display.invalid_entry
       show_disp_menu
     end
+  end
+
+  def call_name
+    begin
+      puts @display.get_name
+      @name = gets.chomp.downcase
+    end until check_validity
+  end
+
+  def call_info
+    puts @display.info
+    response = gets.chomp.downcase
+    return show_disp_menu if response == "y" || response == "yes"
+    exit
+  end
+
+  def supported_actions
+    {
+      "1" => 'call_name',
+      "2" => 'load_game',
+      "3" => 'call_info' ,
+      "*" => 'quitter',
+    }
   end
 
   def check_validity
     true if is_alpha?(@name)
   end
 
-  def check_difficulty(diff)
+  def check_difficulty
     diff = gets.chomp
-    if diff != "*"
-    first_guess(diff)
+    levels = ["7", "8", "9"]
+    if levels.include? diff
+      first_guess(diff)
     elsif diff == "*"
-      quitter(nil)
+      quitter("pre_game")
     else
-      @display.invalid_entry
-      @display.difficulty
+      puts @display.invalid_entry
+      puts @display.difficulty
+      check_difficulty
     end
   end
 
   def show_disp_menu
-    @display.greeting
+    puts @display.greeting
     choice = gets.chomp
     player_choice(choice)
-    diff =  @display.difficulty
-    check_difficulty(diff)
-
+    puts @display.difficulty
+    check_difficulty
   end
 
 end

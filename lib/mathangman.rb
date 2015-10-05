@@ -1,7 +1,7 @@
 require "mathangman/version"
-require_relative "utility"
-require_relative "game"
-require_relative "display"
+require "mathangman/utility"
+require "mathangman/game"
+require "mathangman/display"
 
 module Mathangman
   class Hangman
@@ -9,8 +9,8 @@ module Mathangman
     include Utility
 
     def initialize
-      @disp = Display.new
-      @game = Game.new(@disp)
+      @disp = Mathangman::Display.new
+      @game = Mathangman::Game.new(@disp)
       @game.show_disp_menu
     end
  end
