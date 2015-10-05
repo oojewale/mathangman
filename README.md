@@ -40,7 +40,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/andela-oojewale/mathangman.
 
-* Fork it ( https://github.com/andela-ooranagwa/andela-oojewale/mathangman)
+* Fork it ( https://github.com/andela-ooranagwa/andela-oojewale/mathangman/fork)
 * Create your feature branch (git checkout -b my-new-feature)
 * Commit your changes (git commit -am 'Add some feature')
 * Push to the branch (git push origin my-new-feature)
