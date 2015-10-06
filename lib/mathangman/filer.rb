@@ -18,7 +18,7 @@ module Mathangman
     def check_repeated(name)
       if @restart.nil?
         create_dir
-        loc = "saved_games/#{@name}/#{name}"
+        loc = "saved_games/#{@folder}/#{name}"
       else
         File.delete "saved_games/#{@folder}/#{@restart}"
         loc = "saved_games/#{@folder}/#{name}"
@@ -30,10 +30,9 @@ module Mathangman
     end
 
     def create_dir
-      # require "pry";   binding.pry
-      folder = @name.downcase
+      @folder = @name.downcase
       Dir.mkdir("saved_games") unless Dir.exist?("saved_games")
-      Dir.mkdir("saved_games/#{folder}") unless Dir.exist?("saved_games/#{folder}")
+      Dir.mkdir("saved_games/#{@folder}") unless Dir.exist?("saved_games/#{@folder}")
     end
 
     def del_dir

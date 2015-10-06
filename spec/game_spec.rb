@@ -63,7 +63,6 @@ describe Mathangman::Game do
 
   describe "#check_validity" do
     it "returns true " do
-      # require "pry";   binding.pry
       allow(@game).to receive(:is_alpha?).and_return(true)
       expect(@game.check_validity).to be true
       expect{ @game.check_validity "arg" }.to raise_error ArgumentError
