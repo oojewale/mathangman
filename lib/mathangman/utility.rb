@@ -1,29 +1,23 @@
 module Mathangman
-  module Utility
-  # This module serves as an utility for the whole project.
 
-    def self.quitter(obj = nil)
+  module Utility
+
+    def quitter(obj = nil)
       if obj == "force"
         exit
       else
-        puts "       ****************************************************************"
-        puts "       *   Are you sure you want to quit the game? Press Y to confirm *"
-        puts "       ****************************************************************"
+        puts Display.confirm_quit
         quit_reply(obj)
-        puts "       *************************************************"
-        puts "       *       You have successfully ended the game.   *"
-        puts "       *************************************************"
+        puts Display.quit_notice
         exit
       end
     end
 
-    def self.quit_reply(obj = nil)
+    def quit_reply(obj = nil)
       reply = gets.chomp.downcase
       if reply == "y" || reply == "yes"
         if obj != nil && obj != "pre_game"
-          puts "       ***********************************************************"
-          puts "       *    Would you like to save your game? Press Y to confirm *"
-          puts "       ***********************************************************"
+          puts Display.save_notice
           save_on_quit(obj)
         end
       elsif reply != "y" && reply != "yes" && obj == "pre_game"
@@ -34,28 +28,26 @@ module Mathangman
       end
     end
 
-    def self.save_on_quit(obj)
+    def save_on_quit(obj)
       save_it = gets.chomp.downcase
         if save_it == 'y' || save_it == "yes"
           obj.save_game
         end
     end
 
-    def self.check_source(addy)
+    def check_source(addy)
       if File.exist? addy
         dict = File.readlines addy
         new_dict = []
         dict.each { | item | new_dict << item.to_s }
         new_dict
       else
-        puts "            ***************************************"
-        puts "            *     No file to source words from.   *"
-        puts "            ***************************************"
+        puts Display.no_source
         exit
       end
     end
 
-    def self.is_alpha?(char)
+    def is_alpha?(char)
       if char.length > 1
         true if char.match(/^[[:alpha:]]+$/) != nil
       else

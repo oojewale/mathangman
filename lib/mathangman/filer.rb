@@ -3,14 +3,10 @@ require "time"
 require "fileutils"
 
 module Mathangman
+
   module Filer
 
     attr_accessor :folder, :restart, :files
-
-    def initialize
-      @display = Mathangman::Display.new
-      @game = Mathangman::Game.new
-    end
 
     def save_game
       moment = get_time
@@ -22,7 +18,7 @@ module Mathangman
     def check_repeated(name)
       if @restart.nil?
         create_dir
-        loc = "saved_games/#{@game.name}/#{name}"
+        loc = "saved_games/#{@name}/#{name}"
       else
         File.delete "saved_games/#{@folder}/#{@restart}"
         loc = "saved_games/#{@folder}/#{name}"
@@ -34,7 +30,8 @@ module Mathangman
     end
 
     def create_dir
-      folder = @game.name.downcase
+      # require "pry";   binding.pry
+      folder = @name.downcase
       Dir.mkdir("saved_games") unless Dir.exist?("saved_games")
       Dir.mkdir("saved_games/#{folder}") unless Dir.exist?("saved_games/#{folder}")
     end
@@ -52,7 +49,7 @@ module Mathangman
         load_file
       else
         puts @display.msg "No archive with this username."
-        @game.show_disp_menu
+        show_disp_menu
       end
     end
 
