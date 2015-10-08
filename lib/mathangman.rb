@@ -2,12 +2,12 @@ require "mathangman/version"
 require "mathangman/utility"
 require "mathangman/game"
 require "mathangman/display"
+require "mathangman/filer"
+require "mathangman/difficulty"
 
 module Mathangman
+
   class Hangman
-
-    include Utility
-
     def initialize
       @disp = Mathangman::Display.new
       @game = Mathangman::Game.new(@disp)
@@ -16,5 +16,3 @@ module Mathangman
  end
 
 end
-
-#hang = Mathangman::Hangman.new

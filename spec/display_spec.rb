@@ -61,5 +61,33 @@ describe Mathangman::Display do
     end
   end
 
+  describe "#confirm_quit" do
+    it "returns any message passsed to it" do
+      expect(Mathangman::Display::confirm_quit).to include("Press Y to confirm")
+      expect(Mathangman::Display::confirm_quit).to be_a String
+    end
+  end
+
+  describe "#quit_notice" do
+    it "returns any message passsed to it" do
+      expect(Mathangman::Display::quit_notice).to include("successfully ended")
+      expect(Mathangman::Display::quit_notice).to be_a String
+    end
+  end
+
+  describe "#save_notice" do
+    it "returns any message passsed to it" do
+      expect(Mathangman::Display::save_notice).to include("Press Y to confirm")
+      expect(Mathangman::Display::save_notice).to be_a String
+    end
+  end
+
+  describe "#no_source" do
+    it "returns any message passsed to it" do
+      expect(Mathangman::Display::no_source).to include("No file")
+      expect(Mathangman::Display::no_source).to be_a String
+    end
+  end
+
 
 end
