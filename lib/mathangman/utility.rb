@@ -36,8 +36,9 @@ module Mathangman
     end
 
     def check_source(addy)
-      if File.exist? addy
-        dict = File.readlines addy
+      address = File.join(File.dirname(File.expand_path(__FILE__)))[0..-15] + addy
+      if File.exist?(address)
+        dict = File.readlines address
         new_dict = []
         dict.each { | item | new_dict << item.to_s }
         new_dict

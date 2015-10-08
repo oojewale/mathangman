@@ -20,7 +20,7 @@ module Mathangman
     end
 
     def rand_word(diff = nil)
-      dict = check_source "./5desk.txt"
+      dict = check_source "/5desk.txt"
       unusable = true
       while unusable
         @secret_word = dict.sample.chomp.downcase
@@ -72,8 +72,10 @@ module Mathangman
     def completed
       if !@word.include? "-"
         puts @display.complete_disp
-        File.delete "saved_games/#{@folder}/#{@restart}" if @restart
-        del_dir
+        if @restart
+          File.delete "saved_games/#{@folder}/#{@restart}"
+          del_dir
+        end
         show_disp_menu
       end
     end
