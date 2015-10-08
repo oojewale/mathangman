@@ -6,7 +6,7 @@ require_relative "../lib/mathangman/game"
 require_relative "../lib/mathangman"
 require_relative "../lib/mathangman/display"
 require_relative "../lib/mathangman/utility"
-require_relative "../lib/mathangman/filer"
+require_relative "../lib/mathangman/filemanager"
 require_relative "../lib/mathangman/difficulty"
 
 

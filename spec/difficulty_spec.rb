@@ -9,20 +9,21 @@ describe Mathangman::Difficulty do
 
   describe "#check_difficulty" do
     it "returns falsy " do
-      allow(@game).to receive(:quitter).and_return(nil)
-      allow(@game).to receive(:first_guess).and_return(nil)
-      allow(@game).to receive(:gets).and_return("7")
-      expect(@game.check_difficulty).to be_falsy
+      allow(@game).to receive(:call).and_return(nil)
+      allow(@game).to receive(:puts).and_return("7")
+      quit = Proc.new { }
+      guess = Proc.new { }
+      expect(@game.check_difficulty("disp","7", guess, quit)).to be_falsy
     end
   end
 
    describe "#diff_level" do
     it "returns true " do
-      expect(@game.diff_level(4)).to be true
+      expect(@game.diff_level(10,2,7)).to be_an Integer
     end
 
     it "returns true " do
-      expect(@game.diff_level("r")).to be true
+      expect(@game.diff_level("r",2,7)).to be 0
     end
   end
 

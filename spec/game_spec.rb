@@ -14,7 +14,7 @@ describe Mathangman::Game do
     end
 
     it "throws error when instantiated with 2 or more parameters" do
-      expect{ Mathangman::Game.new "football", "hangman" }.to raise_error ArgumentError
+      expect{ Mathangman::Game.new "enigma", "mastermind", "hangman" }.to raise_error ArgumentError
     end
   end
 
@@ -45,9 +45,9 @@ describe Mathangman::Game do
     end
   end
 
-  describe "#get_time" do
-    it "returns Time in integer form " do
-      expect(@game.get_time).to be_an Integer
+  describe "#restore_state" do
+    it "throws inappropraite ArgumentError" do
+      expect{ @game.restore_state }.to raise_error ArgumentError
     end
   end
 
@@ -119,17 +119,11 @@ describe Mathangman::Game do
       expect(@game.player_choice('1')).to be true
     end
 
-    it "calls load_game when 2 is passsed" do
-      allow(@game).to receive(:load_game).and_return(true)
-      expect(@game.player_choice('2')).to be true
-    end
-
     it "calls call_info when 3 is passsed" do
       allow(@game).to receive(:call_info).and_return(true)
       expect(@game.player_choice('3')).to be true
     end
   end
-
 
   describe "#archives" do
     it "returns file path as string" do
@@ -167,16 +161,6 @@ describe Mathangman::Game do
       expect(@game.wrong_guess).to be nil
     end
   end
-
-  describe "#check_repeated" do
-    it "gets location of the file to be saved" do
-     allow(@game).to receive(:create_dir).and_return(nil)
-      @game.restart
-      expect(@game.check_repeated("olaide")).to be_a String
-    end
-  end
-
-
 
   describe "#act_on_guess" do
     it "returns nil" do
@@ -232,6 +216,12 @@ describe Mathangman::Game do
       allow(@game).to receive(:player_choice).and_return(nil)
       allow(@game).to receive(:check_difficulty).and_return(nil)
       expect(@game.show_disp_menu).to be nil
+    end
+  end
+
+  describe "#restore_state" do
+    it "returns nil " do
+      expect(@game.restore_state(["info","e","w","2","e"])).to be nil
     end
   end
 
