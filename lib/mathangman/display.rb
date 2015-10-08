@@ -1,8 +1,7 @@
 require_relative "utility"
 module Mathangman
-  class Display
 
-    include Utility
+  class Display
 
     def greeting
       <<-EOS
@@ -85,6 +84,38 @@ module Mathangman
                 *      ... games by uisng your username.         *
                 *      Press Y to continue with the game.        *
                 **************************************************
+      EOS
+    end
+
+    def self.confirm_quit
+      <<-EOS
+                ****************************************************************
+                *   Are you sure you want to quit the game? Press Y to confirm *
+                ****************************************************************
+        EOS
+    end
+
+    def self.quit_notice
+      <<-EOS
+                *************************************************
+                *       You have successfully ended the game.   *
+                *************************************************
+      EOS
+    end
+
+    def self.save_notice
+      <<-EOS
+                ***********************************************************
+                *    Would you like to save your game? Press Y to confirm *
+                ***********************************************************
+      EOS
+    end
+
+    def self.no_source
+      <<-EOS
+                ***************************************
+                *     No file to source words from.   *
+                ***************************************
       EOS
     end
 
