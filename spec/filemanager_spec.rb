@@ -36,12 +36,18 @@ describe Mathangman::FileManager do
       expect(@fm.load_file(Proc.new{ })).to be_falsy
     end
 
-    # it "returns falsy " do
-    #   allow(@disp).to receive(:puts).and_return(nil)
-    #   # allow(@fm).to receive(:gets).and_return("0")
-    #   @fm.restart = nil
-    #   expect(@fm.load_file(Proc.new{ })).to be nil
-    # end
+  end
+
+  describe "#no_file" do
+    it "returns falsy " do
+      allow(@disp).to receive(:puts).and_return(nil)
+      allow(@fm).to receive(:gets).and_return("str")
+      @fm.files = []
+      @fm.restart = nil
+      block = Proc.new{ nil }
+      param = "abc"
+      expect(@fm.no_file(param,&block)).to be nil
+    end
   end
 
   describe "#save_state" do
@@ -76,12 +82,11 @@ describe Mathangman::FileManager do
       allow(@fm).to receive(:puts).and_return(nil)
       allow(@fm).to receive(:gets).and_return("olaide")
       allow(@fm).to receive(:folder_not_exist?).and_return(true)
-
       state = Proc.new do | item |
        item
      end
      allow(@fm).to receive(:load_file).and_return(state)
-      expect(@fm.load_game('i',&state)).to be nil
+      expect(@fm.load_game(nil,&state)).to be nil
     end
   end
 

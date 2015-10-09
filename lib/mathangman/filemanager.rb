@@ -65,11 +65,18 @@ module Mathangman
         game_file.each { | item | game_data << item }
         restore.call(game_data)
       else
-        puts @display.msg "Incorrect entry. Please check and retype."
-        load_file(restore)
+        no_file(restore)
       end
     end
 
+    def no_file(restore)
+      puts @display.msg "Incorrect entry. Please check and retype."
+      if block_given?
+        yield
+      else
+        load_file(restore)
+      end
+    end
 
     def folder_not_exist?
       true unless Dir.exist?("saved_games/#{@folder}")
