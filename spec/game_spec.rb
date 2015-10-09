@@ -53,7 +53,8 @@ describe Mathangman::Game do
 
   describe "#is_correct?" do
     it "returns true or false " do
-      @game.rand_word("7")
+      @game.diff = "7"
+      @game.rand_word
       @game.input_from_user
       expect(@game.is_correct?).to eq(true).or eq(false)
     end
@@ -154,9 +155,17 @@ describe Mathangman::Game do
 
   describe "#wrong_guess" do
     it "evaluates number of wrong guesses and returns nil" do
+      @game.wrongs_num = 3
       allow(@game).to receive(:puts).and_return(nil)
       allow(@game).to receive(:show_disp_menu).and_return(nil)
-      @game.wrongs_num
+      @game.secret_word
+      expect(@game.wrong_guess).to be nil
+    end
+
+    it "evaluates number of wrong guesses and returns nil" do
+      @game.wrongs_num = 1
+      allow(@game).to receive(:puts).and_return(nil)
+      allow(@game).to receive(:show_disp_menu).and_return(nil)
       @game.secret_word
       expect(@game.wrong_guess).to be nil
     end
@@ -207,6 +216,14 @@ describe Mathangman::Game do
       allow(@game).to receive(:process).and_return(nil)
       expect(@game.guesses).to be nil
     end
+
+    it "returns nil" do
+      allow(@game).to receive(:input_from_user).and_return("*")
+      allow(@game).to receive(:quitter).and_return(nil)
+      allow(@game).to receive(:process).and_return(nil)
+      expect(@game.guesses).to be nil
+    end
+
   end
 
   describe "#show_disp_menu" do

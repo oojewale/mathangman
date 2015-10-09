@@ -20,7 +20,6 @@ module Mathangman
     end
 
     def diff_level(len, guess_bonus, diff)
-      @diff = diff
       return wrongs_num = len / 2 + guess_bonus if  diff == BEGINNER && word_len_chk(len, 4)
       return wrongs_num = len / 2 + ( guess_bonus - 1 ) if  diff == INTERMEDIATE && word_len_chk(len, 6)
       return wrongs_num = len / 2 if  diff == ADVANCED && word_len_chk(len, 9)

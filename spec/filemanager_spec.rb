@@ -4,7 +4,6 @@ describe Mathangman::FileManager do
 
   before :each  do
     @fm = Mathangman::FileManager.new
-    # @fm = Mathangman::Game.new(@fm)
   end
 
   describe "#create_dir" do
@@ -36,6 +35,13 @@ describe Mathangman::FileManager do
       allow(@fm).to receive(:archives).and_return("test_saved_games/tests/#{@fm.files}")
       expect(@fm.load_file(Proc.new{ })).to be_falsy
     end
+
+    # it "returns falsy " do
+    #   allow(@disp).to receive(:puts).and_return(nil)
+    #   # allow(@fm).to receive(:gets).and_return("0")
+    #   @fm.restart = nil
+    #   expect(@fm.load_file(Proc.new{ })).to be nil
+    # end
   end
 
   describe "#save_state" do
@@ -65,6 +71,18 @@ describe Mathangman::FileManager do
       allow(@fm).to receive(:load_file).and_return(nil)
       expect(@fm.load_game("game_state")).to be nil
     end
+
+    # it "returns nil" do
+    #   allow(@fm).to receive(:puts).and_return(nil)
+    #   allow(@fm).to receive(:gets).and_return("olaide")
+    #   allow(@fm).to receive(:folder_not_exist?).and_return(true)
+
+    #   state = Proc.new do | item |
+    #    item
+    #  end
+    #  allow(@fm).to receive(:load_file).and_return(state)
+    #   expect(@fm.load_game(state)).to be nil
+    # end
   end
 
   describe "#save_game" do

@@ -9,7 +9,7 @@ module Mathangman
     include Difficulty
 
     attr_reader :display
-    attr_accessor :secret_word, :name, :folder, :restart, :files, :word, :len, :wrongs_num, :disp_word, :guess
+    attr_accessor :secret_word, :name, :folder, :diff, :restart, :files, :word, :len, :wrongs_num, :disp_word, :guess
 
     def initialize(disp = Display.new, filer = FileManager.new )
       @guess_bonus = 2
@@ -19,18 +19,18 @@ module Mathangman
 
     end
 
-    def rand_word(diff = nil)
+    def rand_word
       dict = check_source "/5desk.txt"
       while @wrongs_num == 0
         @secret_word = dict.sample.chomp.downcase
         @len = @secret_word.length
-        @wrongs_num = diff_level(len = @len, guess_bonus = @guess_bonus, diff)
+        @wrongs_num = diff_level(len = @len, guess_bonus = @guess_bonus, diff = @diff)
       end
       @secret_word
     end
 
-    def first_guess(diff = nil)
-      wrd = rand_word diff
+    def first_guess
+      wrd = rand_word
       puts @disp_word = "-" * @len
       guesses
     end
@@ -43,7 +43,7 @@ module Mathangman
       puts @display.msg "Enter an alphabet guess for the #{@len} letter word."
       input_from_user
       if @guess == "*"
-        quitter(filer = @filer)
+        quitter(filer = @filer, '')
       end
       process
     end
@@ -161,10 +161,10 @@ module Mathangman
 
     def diff_manager
       puts @display.difficulty
-      diff = gets.chomp
-      initiate_guess = Proc.new { | number | first_guess(number) }
+      @diff = gets.chomp
+      initiate_guess = Proc.new { first_guess }
       call_quit = Proc.new { | str | quitter(str) }
-      check_difficulty(display = @display, diff,  initiate_guess, call_quit)
+      check_difficulty(display = @display, diff = @diff,  initiate_guess, call_quit)
     end
 
     def to_h

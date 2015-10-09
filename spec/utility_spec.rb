@@ -34,7 +34,7 @@ describe Mathangman::Utility do
       allow(@game).to receive(:puts).and_return(nil)
       allow(@game).to receive(:quit_reply).and_return(nil)
       expect { @game.quitter "params1" }.to raise_error SystemExit
-      expect { @game.quitter "params1", "params2"}.to raise_error ArgumentError
+      expect { @game.quitter "params1", "params2", "params3" }.to raise_error ArgumentError
     end
   end
 

@@ -82,7 +82,7 @@ module Mathangman
         restore.call(game_data)
       else
         puts @display.msg "Incorrect entry. Please check and retype."
-        load_file
+        load_file(restore)
       end
     end
 
