@@ -8,8 +8,6 @@ Olaide.
 
 [![Coverage Status](https://coveralls.io/repos/andela-oojewale/mathangman/badge.svg?branch=refactored2&service=github)](https://coveralls.io/github/andela-oojewale/mathangman?branch=refactored2)
 
-TODO: Delete this and the text above, and describe your gem
-
 ## Installation
 
 Add this line to your application's Gemfile:
