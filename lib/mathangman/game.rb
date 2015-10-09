@@ -9,7 +9,7 @@ module Mathangman
     include Difficulty
 
     attr_reader :display
-    attr_accessor :secret_word, :name, :folder, :diff, :restart, :files, :word, :len, :wrongs_num, :disp_word, :guess
+    attr_accessor :secret_word, :name, :folder, :diff, :files, :word, :len, :wrongs_num, :disp_word, :guess
 
     def initialize(disp = Display.new, filer = FileManager.new )
       @guess_bonus = 2
@@ -71,9 +71,9 @@ module Mathangman
     def completed
       if !@word.include? "-"
         puts @display.complete_disp
-        if @restart
-          File.delete "saved_games/#{@folder}/#{@restart}"
-          del_dir
+        if @filer.restart
+          File.delete "saved_games/#{@filer.folder}/#{@filer.restart}"
+          @filer.del_dir
         end
         show_disp_menu
       end

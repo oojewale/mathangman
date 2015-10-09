@@ -72,17 +72,17 @@ describe Mathangman::FileManager do
       expect(@fm.load_game("game_state")).to be nil
     end
 
-    # it "returns nil" do
-    #   allow(@fm).to receive(:puts).and_return(nil)
-    #   allow(@fm).to receive(:gets).and_return("olaide")
-    #   allow(@fm).to receive(:folder_not_exist?).and_return(true)
+    it "returns nil" do
+      allow(@fm).to receive(:puts).and_return(nil)
+      allow(@fm).to receive(:gets).and_return("olaide")
+      allow(@fm).to receive(:folder_not_exist?).and_return(true)
 
-    #   state = Proc.new do | item |
-    #    item
-    #  end
-    #  allow(@fm).to receive(:load_file).and_return(state)
-    #   expect(@fm.load_game(state)).to be nil
-    # end
+      state = Proc.new do | item |
+       item
+     end
+     allow(@fm).to receive(:load_file).and_return(state)
+      expect(@fm.load_game('i',&state)).to be nil
+    end
   end
 
   describe "#save_game" do

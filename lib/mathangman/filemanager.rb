@@ -57,6 +57,20 @@ module Mathangman
       end
     end
 
+    def load_file(restore)
+      @restart = @files[gets.chomp.to_i]
+      unless @restart.nil?
+        game_file = File.readlines archives "saved_games"
+        game_data = []
+        game_file.each { | item | game_data << item }
+        restore.call(game_data)
+      else
+        puts @display.msg "Incorrect entry. Please check and retype."
+        load_file(restore)
+      end
+    end
+
+
     def folder_not_exist?
       true unless Dir.exist?("saved_games/#{@folder}")
     end
@@ -71,19 +85,6 @@ module Mathangman
         end
       end
       files_hash.each { | key, value | puts "#{key})  #{value}" }
-    end
-
-    def load_file(restore)
-      @restart = @files[gets.chomp.to_i]
-      unless @restart.nil?
-        game_file = File.readlines archives "saved_games"
-        game_data = []
-        game_file.each { | item | game_data << item }
-        restore.call(game_data)
-      else
-        puts @display.msg "Incorrect entry. Please check and retype."
-        load_file(restore)
-      end
     end
 
     def archives(link)
