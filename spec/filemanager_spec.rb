@@ -45,7 +45,7 @@ describe Mathangman::FileManager do
       @fm.files = []
       @fm.restart = nil
       block = Proc.new{ nil }
-      param = "abc"
+      param = "str"
       expect(@fm.no_file(param,&block)).to be nil
     end
   end
