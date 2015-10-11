@@ -23,17 +23,6 @@ describe Mathangman::Difficulty do
       guess = Proc.new { }
       expect(@game.check_difficulty("disp","*", guess, quit)).to be_falsy
     end
-
-    # it "returns falsy " do
-    #   allow(@disp).to receive(:invalid_entry).and_return(String)
-    #   allow(@disp).to receive(:difficulty).and_return(nil)
-    #   allow(@game).to receive(:puts).and_return("ab")
-    #   quit = Proc.new { }
-    #   guess = Proc.new { }
-    #   expect(@game.check_difficulty("disp","ab", guess, quit)).to be_falsy
-    # end
-
-
   end
 
    describe "#diff_level" do
