@@ -7,7 +7,7 @@ module Mathangman
         exit
       else
         puts Display.confirm_quit
-        quit_reply(filer_obj, quit_info) if filer_obj
+        quit_reply(filer_obj, quit_info)
         puts Display.quit_notice
         exit
       end
