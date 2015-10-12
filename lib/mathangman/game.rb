@@ -1,6 +1,5 @@
 require_relative "utility"
 require_relative "difficulty"
-require_relative "filer"
 
 module Mathangman
 
@@ -8,30 +7,30 @@ module Mathangman
 
     include Utility
     include Difficulty
-    include Filer
 
     attr_reader :display
-    attr_accessor :secret_word, :name, :folder, :restart, :files, :word, :len, :wrongs_num, :disp_word, :guess
+    attr_accessor :secret_word, :name, :folder, :diff, :files, :word, :len, :wrongs_num, :disp_word, :guess
 
-    def initialize(disp = nil)
+    def initialize(disp = Display.new, filer = FileManager.new )
       @guess_bonus = 2
       @wrongs_num = 0
-      @display = disp unless disp.nil?
+      @display = disp
+      @filer = filer
+
     end
 
-    def rand_word(diff = nil)
+    def rand_word
       dict = check_source "/5desk.txt"
-      unusable = true
-      while unusable
+      while @wrongs_num == 0
         @secret_word = dict.sample.chomp.downcase
         @len = @secret_word.length
-        unusable = diff_level(diff)
+        @wrongs_num = diff_level(len = @len, guess_bonus = @guess_bonus, diff = @diff)
       end
       @secret_word
     end
 
-    def first_guess(diff = nil)
-      wrd = rand_word diff
+    def first_guess
+      wrd = rand_word
       puts @disp_word = "-" * @len
       guesses
     end
@@ -40,11 +39,11 @@ module Mathangman
       @guess = gets.chomp.downcase
     end
 
-    def guesses(obj = nil)
+    def guesses
       puts @display.msg "Enter an alphabet guess for the #{@len} letter word."
       input_from_user
       if @guess == "*"
-        quitter(self)
+        quitter(filer = @filer, '')
       end
       process
     end
@@ -72,9 +71,9 @@ module Mathangman
     def completed
       if !@word.include? "-"
         puts @display.complete_disp
-        if @restart
-          File.delete "saved_games/#{@folder}/#{@restart}"
-          del_dir
+        if @filer.restart
+          File.delete "saved_games/#{@filer.folder}/#{@filer.restart}"
+          @filer.del_dir
         end
         show_disp_menu
       end
@@ -120,6 +119,7 @@ module Mathangman
       begin
         puts @display.get_name
         @name = gets.chomp.downcase
+        @filer.name = @name
       end until check_validity
     end
 
@@ -130,10 +130,20 @@ module Mathangman
       exit
     end
 
+    def loader
+      rest = Proc.new do | data |
+       restore_state(data)
+       guesses
+      end
+      @filer.load_game(rest) do
+        show_disp_menu
+      end
+    end
+
     def supported_actions
       {
         "1" => 'call_name',
-        "2" => 'load_game',
+        "2" => 'loader',
         "3" => 'call_info'
       }
     end
@@ -146,8 +156,35 @@ module Mathangman
       puts @display.greeting
       choice = gets.chomp
       player_choice(choice)
+      diff_manager
+    end
+
+    def diff_manager
       puts @display.difficulty
-      check_difficulty
+      @diff = gets.chomp
+      initiate_guess = Proc.new { first_guess }
+      call_quit = Proc.new { | str | quitter(str) }
+      check_difficulty(display = @display, diff = @diff,  initiate_guess, call_quit)
+    end
+
+    def to_h
+      {
+        diff: @diff,
+        word: @word,
+        secret_word: @secret_word,
+        len: @len,
+        wrongs_num: @wrongs_num
+      }
+    end
+
+    def restore_state(info)
+      @diff = info[0].to_s
+      puts @word = info[1].to_s
+      @secret_word = info[2].to_s
+      @wrongs_num = info[3].to_i
+      @len = info[4].to_i
+      @disp_word = @word if !@word.nil?
+      @disp_word = "-" * @len if @word.nil?
     end
 
   end

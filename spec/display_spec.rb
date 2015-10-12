@@ -89,5 +89,12 @@ describe Mathangman::Display do
     end
   end
 
+  describe "#choose_diff_level" do
+    it "returns any message passsed to it" do
+      expect(Mathangman::Display::choose_diff_level).to include("level to continue")
+      expect(Mathangman::Display::choose_diff_level).to be_a String
+    end
+  end
+
 
 end

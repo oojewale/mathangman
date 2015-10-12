@@ -2,36 +2,47 @@ module Mathangman
 
   module Utility
 
-    def quitter(obj = nil)
-      if obj == "force"
+    def quitter(filer_obj = nil, quit_info)
+      if quit_info == "force"
         exit
       else
         puts Display.confirm_quit
-        quit_reply(obj)
+        quit_reply(filer_obj, quit_info) if filer_obj
         puts Display.quit_notice
         exit
       end
     end
 
-    def quit_reply(obj = nil)
+    def quit_reply(filer_obj = nil, quit_info)
       reply = gets.chomp.downcase
-      if reply == "y" || reply == "yes"
-        if obj != nil && obj != "pre_game"
+      case
+        when filer_yes(reply, filer_obj)
           puts Display.save_notice
-          save_on_quit(obj)
-        end
-      elsif reply != "y" && reply != "yes" && obj == "pre_game"
-        puts "       *       Choose a difficulty level to continue.   *"
-        obj.check_difficulty
-      elsif reply != "y" && reply != "yes" && obj != "pre_game" && (is_alpha? reply)
-        obj.guesses
+          save_on_quit(filer_obj)
+        when pre_checker(reply, quit_info)
+          puts Display.choose_diff_level
+          diff_manager
+        when not_alpha(reply, quit_info)
+          guesses
       end
     end
 
-    def save_on_quit(obj)
+    def filer_yes(reply, filer_obj)
+      reply == ( "y" || "yes" ) && filer_obj
+    end
+
+    def not_alpha(reply, quit_info)
+      reply != "y" && reply != "yes" && quit_info != "pre_game" && (is_alpha? reply)
+    end
+
+    def pre_checker(reply, quit_info)
+      reply != "y" && reply != "yes" && quit_info == "pre_game"
+    end
+
+    def save_on_quit(filer_obj)
       save_it = gets.chomp.downcase
         if save_it == 'y' || save_it == "yes"
-          obj.save_game
+          filer_obj.save_game(self.to_h)
         end
     end
 

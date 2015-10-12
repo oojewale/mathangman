@@ -119,5 +119,11 @@ module Mathangman
       EOS
     end
 
+    def self.choose_diff_level
+      <<-EOS
+                *       Choose a difficulty level to continue.   *
+      EOS
+    end
+
   end
 end

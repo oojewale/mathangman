@@ -14,7 +14,7 @@ describe Mathangman::Game do
     end
 
     it "throws error when instantiated with 2 or more parameters" do
-      expect{ Mathangman::Game.new "football", "hangman" }.to raise_error ArgumentError
+      expect{ Mathangman::Game.new "enigma", "mastermind", "hangman" }.to raise_error ArgumentError
     end
   end
 
@@ -41,19 +41,21 @@ describe Mathangman::Game do
 
   describe "#input_from_user" do
     it "returns a string " do
+      @game.guess
       expect(@game.input_from_user).to be_a String
     end
   end
 
-  describe "#get_time" do
-    it "returns Time in integer form " do
-      expect(@game.get_time).to be_an Integer
+  describe "#restore_state" do
+    it "throws inappropraite ArgumentError" do
+      expect{ @game.restore_state }.to raise_error ArgumentError
     end
   end
 
   describe "#is_correct?" do
     it "returns true or false " do
-      @game.rand_word("7")
+      @game.diff = "7"
+      @game.rand_word
       @game.input_from_user
       expect(@game.is_correct?).to eq(true).or eq(false)
     end
@@ -110,7 +112,6 @@ describe Mathangman::Game do
   describe "#player_choice" do
 
     it "gets player choice" do
-      # allow(@game).to receive(:quitter).and_return(true)
       expect{@game.player_choice '*'}.to raise_error SystemExit
     end
 
@@ -119,17 +120,18 @@ describe Mathangman::Game do
       expect(@game.player_choice('1')).to be true
     end
 
-    it "calls load_game when 2 is passsed" do
-      allow(@game).to receive(:load_game).and_return(true)
-      expect(@game.player_choice('2')).to be true
-    end
-
     it "calls call_info when 3 is passsed" do
       allow(@game).to receive(:call_info).and_return(true)
       expect(@game.player_choice('3')).to be true
     end
-  end
 
+    it "calls call_name when 8 is passsed" do
+      allow(@game).to receive(:puts).and_return(nil)
+      allow(@game).to receive(:show_disp_menu).and_return(nil)
+      expect(@game.player_choice('8')).to be nil
+    end
+
+  end
 
   describe "#archives" do
     it "returns file path as string" do
@@ -146,6 +148,15 @@ describe Mathangman::Game do
       @game.word = "word"
       expect(@game.completed).to be nil
     end
+
+    it "returns nil when word is not containing '-'" do
+      allow(@game).to receive(:puts).and_return(nil)
+      allow(@game).to receive(:del_dir).and_return(nil)
+      allow(@game).to receive(:show_disp_menu).and_return(nil)
+      @game.word = "word"
+      expect(@game.completed).to be nil
+    end
+
   end
 
   describe "#first_guess" do
@@ -160,23 +171,21 @@ describe Mathangman::Game do
 
   describe "#wrong_guess" do
     it "evaluates number of wrong guesses and returns nil" do
+      @game.wrongs_num = 3
       allow(@game).to receive(:puts).and_return(nil)
       allow(@game).to receive(:show_disp_menu).and_return(nil)
-      @game.wrongs_num
+      @game.secret_word
+      expect(@game.wrong_guess).to be nil
+    end
+
+    it "evaluates number of wrong guesses and returns nil" do
+      @game.wrongs_num = 1
+      allow(@game).to receive(:puts).and_return(nil)
+      allow(@game).to receive(:show_disp_menu).and_return(nil)
       @game.secret_word
       expect(@game.wrong_guess).to be nil
     end
   end
-
-  describe "#check_repeated" do
-    it "gets location of the file to be saved" do
-     allow(@game).to receive(:create_dir).and_return(nil)
-      @game.restart
-      expect(@game.check_repeated("olaide")).to be_a String
-    end
-  end
-
-
 
   describe "#act_on_guess" do
     it "returns nil" do
@@ -223,6 +232,14 @@ describe Mathangman::Game do
       allow(@game).to receive(:process).and_return(nil)
       expect(@game.guesses).to be nil
     end
+
+    it "returns nil" do
+      allow(@game).to receive(:input_from_user).and_return("*")
+      allow(@game).to receive(:quitter).and_return(nil)
+      allow(@game).to receive(:process).and_return(nil)
+      expect(@game.guesses).to be nil
+    end
+
   end
 
   describe "#show_disp_menu" do
@@ -232,6 +249,24 @@ describe Mathangman::Game do
       allow(@game).to receive(:player_choice).and_return(nil)
       allow(@game).to receive(:check_difficulty).and_return(nil)
       expect(@game.show_disp_menu).to be nil
+    end
+  end
+
+  describe "#restore_state" do
+    it "returns nil " do
+      expect(@game.restore_state(["info","e","w","2","e"])).to be nil
+    end
+  end
+
+  describe "#input_from_user" do
+    it "returns nil " do
+      expect(@game.input_from_user).to eql("y")
+    end
+  end
+
+  describe "#to_h" do
+    it "returns nil " do
+      expect(@game.to_h).to be_a Hash
     end
   end
 

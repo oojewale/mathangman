@@ -33,9 +33,8 @@ describe Mathangman::Utility do
     it "exits game or throws args error when called with inappropraite params " do
       allow(@game).to receive(:puts).and_return(nil)
       allow(@game).to receive(:quit_reply).and_return(nil)
-      expect { @game.quitter }.to raise_error SystemExit
       expect { @game.quitter "params1" }.to raise_error SystemExit
-      expect { @game.quitter "params1", "params2"}.to raise_error ArgumentError
+      expect { @game.quitter "params1", "params2", "params3" }.to raise_error ArgumentError
     end
   end
 
@@ -43,18 +42,40 @@ describe Mathangman::Utility do
     it "saves and exits game or throws args error when called with inappropraite params " do
       allow(@game).to receive(:puts).and_return(nil)
       allow(@game).to receive(:gets).and_return("y")
-      allow(@game).to receive(:save_game).and_return(nil)
+      allow(Mathangman::FileManager.new).to receive(:save_game).and_return(nil)
       expect{@game.save_on_quit}.to raise_error ArgumentError
     end
+
+    it "returns null if user input is not 'y' or 'yes' " do
+      allow(@game).to receive(:puts).and_return(nil)
+      allow(@game).to receive(:gets).and_return("n")
+      expect(@game.save_on_quit(Mathangman::FileManager.new)).to be nil
+    end
+
   end
 
   describe "#quit_reply" do
     it "stops guess and returns nil if user wants to quit " do
       allow(@game).to receive(:puts).and_return(nil)
       allow(@game).to receive(:gets).and_return("y")
-      allow(@game).to receive(:is_alpha).and_return(true)
-      allow(@game).to receive(:check_difficulty).and_return(nil)
-      expect(@game.quit_reply).to be nil
+      allow(@game).to receive(:save_on_quit).and_return(nil)
+      allow(@game).to receive(:diff_manager).and_return(nil)
+      allow(Mathangman::FileManager.new).to receive(:save_game).and_return(nil)
+      expect(@game.quit_reply("reply")).to be nil
+    end
+
+    it "stops guess and returns nil if user wants to quit " do
+      allow(@game).to receive(:gets).and_return("other string")
+      allow(@game).to receive(:guesses).and_return(nil)
+      expect(@game.quit_reply("reply")).to be nil
+    end
+
+    it "stops guess and returns nil if user wants to quit " do
+      allow(@game).to receive(:gets).and_return("yes")
+      allow(@game).to receive(:puts).and_return(nil)
+      @game.pre_checker("yes", "pre_game")
+      allow(@game).to receive(:diff_manager).and_return(nil)
+      expect(@game.quit_reply("pre_game")).to be nil
     end
 
     it "contiues guess and returns nil if user doesnt want to quit " do
@@ -62,7 +83,7 @@ describe Mathangman::Utility do
       allow(@game).to receive(:gets).and_return("1")
       allow(@game).to receive(:is_alpha).and_return(false)
       allow(@game).to receive(:guesses).and_return(nil)
-      expect(@game.quit_reply).to be nil
+      expect(@game.quit_reply("reply")).to be nil
     end
 
   end
