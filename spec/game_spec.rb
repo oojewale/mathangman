@@ -245,7 +245,7 @@ describe Mathangman::Game do
 
   describe "#input_from_user" do
     it "returns nil " do
-      @guess
+      @guess = "e"
       expect(@game.input_from_user).to be_a String
     end
   end
