@@ -1,5 +1,7 @@
-require 'coveralls'
-Coveralls.wear!
+# require 'coveralls'
+# Coveralls.wear!
+require "simplecov"
+SimpleCov.start
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 require 'mathangman'
 require_relative "../lib/mathangman/game"
@@ -14,10 +16,6 @@ require "yaml"
 
 
 class Mathangman::Game
-  def input_from_user
-    @guess = 'y'
-  end
-
   def archives(link)
     "test_saved_games/tests/#{@restart}"
   end

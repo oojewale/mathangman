@@ -5,7 +5,9 @@ describe Mathangman::Game do
 
   before :each  do
     @disp = Mathangman::Display.new
-    @game = Mathangman::Game.new(@disp)
+    @filer = Mathangman::FileManager.new
+    @game = Mathangman::Game.new(@disp, @filer)
+
   end
 
   describe "#new" do
@@ -24,7 +26,7 @@ describe Mathangman::Game do
     it "returns a string " do
       allow(@game).to receive(:diff_level).and_return(false)
       allow(@game).to receive(:guesses).and_return(nil)
-      @game.input_from_user
+      allow(@game).to receive(:input_from_user).and_return("y")
       @game.first_guess
       @game.is_correct?
       expect(@game.show_letter).to be_a String
@@ -41,7 +43,8 @@ describe Mathangman::Game do
 
   describe "#input_from_user" do
     it "returns a string " do
-      @game.guess
+      allow(@game).to receive(:gets).and_return("y")
+        # require "pry"; binding.pry
       expect(@game.input_from_user).to be_a String
     end
   end
@@ -56,7 +59,7 @@ describe Mathangman::Game do
     it "returns true or false " do
       @game.diff = "7"
       @game.rand_word
-      @game.input_from_user
+      allow(@game).to receive(:input_from_user).and_return("y")
       expect(@game.is_correct?).to eq(true).or eq(false)
     end
   end
@@ -260,6 +263,7 @@ describe Mathangman::Game do
 
   describe "#input_from_user" do
     it "returns nil " do
+      allow(@game).to receive(:gets).and_return("y")
       expect(@game.input_from_user).to eql("y")
     end
   end
@@ -267,6 +271,17 @@ describe Mathangman::Game do
   describe "#to_h" do
     it "returns nil " do
       expect(@game.to_h).to be_a Hash
+    end
+  end
+
+  describe "#loader" do
+    it "displays game info to player" do
+      my_proc = Proc.new { }
+      allow(@game).to receive(:restore_state).and_return(nil)
+      allow(@game).to receive(:guesses).and_return(nil)
+      allow(@filer).to receive(:load_game).and_return(nil)
+      allow(@game).to receive(:show_disp_menu).and_return(nil)
+      expect(@game.loader).to be nil
     end
   end
 

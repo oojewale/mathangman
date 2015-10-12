@@ -23,6 +23,7 @@ describe Mathangman::Difficulty do
       guess = Proc.new { }
       expect(@game.check_difficulty("disp","*", guess, quit)).to be_falsy
     end
+
   end
 
    describe "#diff_level" do

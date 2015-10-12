@@ -35,7 +35,6 @@ describe Mathangman::FileManager do
       allow(@fm).to receive(:archives).and_return("test_saved_games/tests/#{@fm.files}")
       expect(@fm.load_file(Proc.new{ })).to be_falsy
     end
-
   end
 
   describe "#no_file" do
@@ -47,6 +46,16 @@ describe Mathangman::FileManager do
       block = Proc.new{ nil }
       param = "str"
       expect(@fm.no_file(param,&block)).to be nil
+    end
+
+    it "returns falsy when no block is passed " do
+      allow(@disp).to receive(:puts).and_return(nil)
+      allow(@fm).to receive(:load_file).and_return(nil)
+      allow(@fm).to receive(:gets).and_return("str")
+      @fm.files = []
+      @fm.restart = nil
+      param = "str"
+      expect(@fm.no_file(param)).to be nil
     end
   end
 
@@ -109,6 +118,13 @@ describe Mathangman::FileManager do
   describe "#get_time" do
     it "returns Time in integer form " do
       expect(@fm.get_time).to be_an Integer
+    end
+  end
+
+  describe "#archives" do
+    it "return path of file " do
+      link =  "save/folders/files"
+      expect(@fm.archives "link").to be_a String
     end
   end
 
