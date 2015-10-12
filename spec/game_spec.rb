@@ -148,6 +148,15 @@ describe Mathangman::Game do
       @game.word = "word"
       expect(@game.completed).to be nil
     end
+
+    it "returns nil when word is not containing '-'" do
+      allow(@game).to receive(:puts).and_return(nil)
+      allow(@game).to receive(:del_dir).and_return(nil)
+      allow(@game).to receive(:show_disp_menu).and_return(nil)
+      @game.word = "word"
+      expect(@game.completed).to be nil
+    end
+
   end
 
   describe "#first_guess" do
@@ -251,8 +260,7 @@ describe Mathangman::Game do
 
   describe "#input_from_user" do
     it "returns nil " do
-      @guess = "e"
-      expect(@game.input_from_user).to be_a String
+      expect(@game.input_from_user).to eql("y")
     end
   end
 

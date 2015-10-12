@@ -46,13 +46,6 @@ describe Mathangman::Utility do
       expect{@game.save_on_quit}.to raise_error ArgumentError
     end
 
-    # it "saves and exits game or throws args error when called with inappropraite params " do
-    #   allow(@game).to receive(:puts).and_return(nil)
-    #   allow(@game).to receive(:gets).and_return("y")
-    #   allow(Mathangman::FileManager.new).to receive(:save_game).and_return(self)
-    #   expect(@game.save_on_quit(Mathangman::FileManager.new)).to be nil
-    # end
-
     it "returns null if user input is not 'y' or 'yes' " do
       allow(@game).to receive(:puts).and_return(nil)
       allow(@game).to receive(:gets).and_return("n")
@@ -84,18 +77,6 @@ describe Mathangman::Utility do
       allow(@game).to receive(:diff_manager).and_return(nil)
       expect(@game.quit_reply("pre_game")).to be nil
     end
-
-    #  it "stops guess and returns nil if user wants to quit " do
-    #   allow(@game).to receive(:puts).and_return("y")
-    #   allow(@game).to receive(:gets).and_return("y")
-    #   # allow(@game).to receive(:save_on_quit).and_return(nil)
-    #   require "pry"; binding.pry
-    #   allow(@disp).to receive(:save_notice).and_return("y")
-    #   @game.save_on_quit(Mathangman::FileManager.new)
-    #   # allow(Mathangman::FileManager.new).to receive(:save_game).and_return(nil)
-    #   # allow(@game).to receive(:guesses).and_return(nil)
-    #   expect(@game.quit_reply(Mathangman::FileManager.new, "")).to be nil
-    # end
 
     it "contiues guess and returns nil if user doesnt want to quit " do
       allow(@game).to receive(:puts).and_return(nil)

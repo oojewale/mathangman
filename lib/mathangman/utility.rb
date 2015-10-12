@@ -8,7 +8,6 @@ module Mathangman
       else
         puts Display.confirm_quit
         quit_reply(filer_obj, quit_info) if filer_obj
-        quit_reply(quit_info) if !filer_obj
         puts Display.quit_notice
         exit
       end
@@ -17,17 +16,19 @@ module Mathangman
     def quit_reply(filer_obj = nil, quit_info)
       reply = gets.chomp.downcase
       case
-        when reply == "y" || reply == "yes"
-          if filer_obj
-            puts Display.save_notice
-            save_on_quit(filer_obj)
-          end
+        when filer_yes(reply, filer_obj)
+          puts Display.save_notice
+          save_on_quit(filer_obj)
         when pre_checker(reply, quit_info)
           puts Display.choose_diff_level
           diff_manager
         when not_alpha(reply, quit_info)
           guesses
       end
+    end
+
+    def filer_yes(reply, filer_obj)
+      reply == ( "y" || "yes" ) && filer_obj
     end
 
     def not_alpha(reply, quit_info)
