@@ -112,7 +112,6 @@ describe Mathangman::Game do
   describe "#player_choice" do
 
     it "gets player choice" do
-      # allow(@game).to receive(:quitter).and_return(true)
       expect{@game.player_choice '*'}.to raise_error SystemExit
     end
 
@@ -125,6 +124,13 @@ describe Mathangman::Game do
       allow(@game).to receive(:call_info).and_return(true)
       expect(@game.player_choice('3')).to be true
     end
+
+    it "calls call_name when 8 is passsed" do
+      allow(@game).to receive(:puts).and_return(nil)
+      allow(@game).to receive(:show_disp_menu).and_return(nil)
+      expect(@game.player_choice('8')).to be nil
+    end
+
   end
 
   describe "#archives" do
