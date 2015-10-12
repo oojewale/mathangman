@@ -243,4 +243,16 @@ describe Mathangman::Game do
     end
   end
 
+  describe "#input_from_user" do
+    it "returns nil " do
+      expect(@game.input_from_user).to be_a String
+    end
+  end
+
+  describe "#to_h" do
+    it "returns nil " do
+      expect(@game.to_h).to be_a Hash
+    end
+  end
+
 end
