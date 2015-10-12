@@ -6,7 +6,7 @@ You will be prompted to guess letters of the alphabet that make up a randomly se
 Get your hands on the game and enjoy! Bug discoveries, suggestions and general feedback will always be appreciated.
 Olaide.
 
-[![Coverage Status](https://coveralls.io/repos/andela-oojewale/mathangman/badge.svg?branch=refactored2&service=github)](https://coveralls.io/github/andela-oojewale/mathangman?branch=refactored2)
+[![Coverage Status](https://coveralls.io/repos/andela-oojewale/mathangman/badge.svg?branch=master&service=github)](https://coveralls.io/github/andela-oojewale/mathangman?branch=master)
 
 ## Installation
 
